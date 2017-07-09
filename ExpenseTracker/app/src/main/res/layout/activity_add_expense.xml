@@ -17,7 +17,8 @@
         android:layout_below="@+id/editText2"
         android:layout_alignStart="@+id/textView4"
         android:layout_marginTop="34dp"
-        android:id="@+id/button" />
+        android:id="@+id/button"
+        android:onClick="addExpenseOnClick" />
 
     <TextView
         android:text="Item"
@@ -70,4 +71,15 @@
         android:datePickerMode="spinner"
         android:layout_below="@+id/editText"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="23dp"
+        android:id="@+id/button2"
+        android:layout_alignBaseline="@+id/button"
+        android:layout_alignBottom="@+id/button"
+        android:layout_toEndOf="@+id/button"
+        android:onClick="backToHomeScreen" />
 </RelativeLayout>
