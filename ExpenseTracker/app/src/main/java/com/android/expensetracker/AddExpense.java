@@ -3,6 +3,7 @@ package com.android.expensetracker;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -27,10 +28,17 @@ public class AddExpense extends AppCompatActivity {
         setContentView(R.layout.activity_add_expense);
     }
     public void addExpenseOnClick(View view){
-        Item item = new Item();
         EditText et = (EditText)findViewById(R.id.editText);
-        String name = et.getText().toString();
         EditText et2 = (EditText)findViewById(R.id.editText2);
+        if(et.getText().toString().trim().equals("") || et2.getText().toString().trim().equals("")){
+            Toast.makeText(this,"Empty fields not allowed", Toast.LENGTH_LONG).show();
+        }else{
+        DBHelper db = new DBHelper(this);
+        Log.d("Insert: ", "Inserting ..");
+        Item item = new Item();
+
+        String name = et.getText().toString();
+
         float price = Float.parseFloat( et2.getText().toString());
         DatePicker datePicker;
         datePicker = (DatePicker) findViewById(R.id.datePicker);
@@ -44,13 +52,21 @@ public class AddExpense extends AppCompatActivity {
         System.out.println(name);
         System.out.println(price);
 
-        item.setDay(day);
-        item.setMonth(month);
-        item.setName(name);
-        item.setPrice(price);
-        item.setYear(year);
-        al.add(item);
-        if(map.get(year)!=null){
+            item.setDay(day);
+            item.setMonth(month);
+            item.setName(name);
+            item.setPrice(price);
+            item.setYear(year);
+            al.add(item);
+            db.addItem(item);
+            System.out.println("Record added in db");
+            Toast.makeText(this,"Expense added successfully!!!", Toast.LENGTH_LONG).show();
+            et.setText("");
+            et2.setText("");
+        }
+
+
+        /*if(map.get(year)!=null){
             mapMonthExpense = map.get(year);
             if(mapMonthExpense.get(month)!=null){
                 float currPrice = mapMonthExpense.get(month);
@@ -75,15 +91,13 @@ public class AddExpense extends AppCompatActivity {
                 Map.Entry p1 = (Map.Entry)i.next();
                 System.out.println("month:" + p1.getKey()+"  "+ "total:" + p1.getValue());
             }
-        }
+        }*/
         //System.out.println(mapMonthExpense.get(month));
-        Toast.makeText(this,"Expense added successfully!!!", Toast.LENGTH_LONG).show();
-        et.setText("");
-        et2.setText("");
+
     }
     public void backToHomeScreen(View view){
         Intent intent = new Intent(this, MainExpenseActivity.class);
-        intent.putExtra("EXTRA_MESSAGE", map);
+        //intent.putExtra("EXTRA_MESSAGE", map);
         startActivity(intent);
     }
 }

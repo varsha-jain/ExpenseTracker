@@ -5,6 +5,7 @@ package com.android.expensetracker;
  */
 
 public class Item {
+    private int item_id;
     private String name;
     private float price;
     private int month;
@@ -53,5 +54,18 @@ public class Item {
 
     public void setDay(int day) {
         this.day = day;
+    }
+
+    public int getItem_id() {
+        return item_id;
+    }
+
+    public void setItem_id(int item_id) {
+        this.item_id = item_id;
+    }
+
+    @Override
+    public String toString() {
+        return name + " " + price;
     }
 }

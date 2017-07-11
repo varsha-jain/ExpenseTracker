@@ -16,6 +16,7 @@ public class MainExpenseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_expense);
 
+
     }
 
     public void addExpense(View view){
@@ -24,23 +25,30 @@ public class MainExpenseActivity extends AppCompatActivity {
     }
 
     public void viewExpense(View view){
-        Intent i = getIntent();
-        HashMap<Integer, HashMap<Integer, Float>> map = (HashMap<Integer, HashMap<Integer, Float>>) i.getSerializableExtra("EXTRA_MESSAGE");
-
-        Iterator itr = map.entrySet().iterator();
-        while(itr.hasNext()){
-            Map.Entry p = (Map.Entry)itr.next();
-            System.out.println("year;"+p.getKey());
-            HashMap<Integer, Float> m1 = map.get(p.getKey());
-            Iterator it = m1.entrySet().iterator();
-            while(it.hasNext()){
-                Map.Entry p1 = (Map.Entry)it.next();
-                System.out.println("month:" + p1.getKey()+"  "+ "total:" + p1.getValue());
+       // Intent i = getIntent();
+       /* HashMap<Integer, HashMap<Integer, Float>> map = (HashMap<Integer, HashMap<Integer, Float>>) i.getSerializableExtra("EXTRA_MESSAGE");
+        if(map!=null){
+            Iterator itr = map.entrySet().iterator();
+            while(itr.hasNext()){
+                Map.Entry p = (Map.Entry)itr.next();
+                System.out.println("year;"+p.getKey());
+                HashMap<Integer, Float> m1 = map.get(p.getKey());
+                Iterator it = m1.entrySet().iterator();
+                while(it.hasNext()){
+                    Map.Entry p1 = (Map.Entry)it.next();
+                    System.out.println("month:" + p1.getKey()+"  "+ "total:" + p1.getValue());
+                }
             }
+            //
+            Intent intent = new Intent(this, ViewExpense.class);
+            intent.putExtra("HashMap", map);
+            startActivity(intent);
         }
-        //
-        Intent intent = new Intent(this, ViewExpense.class);
-        intent.putExtra("HashMap", map);
-        startActivity(intent);
+       else{*/
+            Intent intent = new Intent(this, ViewExpense.class);
+            startActivity(intent);
+       // }
+
+
     }
 }
