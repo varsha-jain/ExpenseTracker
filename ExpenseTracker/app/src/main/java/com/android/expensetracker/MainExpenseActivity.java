@@ -1,6 +1,8 @@
 package com.android.expensetracker;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,15 +13,24 @@ import java.util.Map;
 
 public class MainExpenseActivity extends AppCompatActivity {
 
+    public static final String Email = "email";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_expense);
 
 
+        //check for current date
+        //if current date is last date of that month then automatically send an email with the total expense of that  month
+
     }
 
     public void addExpense(View view){
+        SharedPreferences sharedpreferences = getSharedPreferences(HomeScreen.MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        String email = sharedpreferences.getString("emailKey","");
+        editor.putString(Email, email);
+        editor.commit();
         Intent intent = new Intent(this, AddExpense.class);
         startActivity(intent);
     }
@@ -45,6 +56,11 @@ public class MainExpenseActivity extends AppCompatActivity {
             startActivity(intent);
         }
        else{*/
+        SharedPreferences sharedpreferences = getSharedPreferences(HomeScreen.MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        String email = sharedpreferences.getString("emailKey","");
+        editor.putString(Email, email);
+        editor.commit();
             Intent intent = new Intent(this, ViewExpense.class);
             startActivity(intent);
        // }

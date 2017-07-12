@@ -1,6 +1,8 @@
 package com.android.expensetracker;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -58,6 +60,15 @@ public class AddExpense extends AppCompatActivity {
             item.setPrice(price);
             item.setYear(year);
             al.add(item);
+            SharedPreferences sharedpreferences = getSharedPreferences(HomeScreen.MyPREFERENCES, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            String email = sharedpreferences.getString("email","");
+            System.out.println(email);
+            //editor.putString(Email, email);
+            //editor.commit();
+            int userID = db.getUserID(email);
+            System.out.println("in add expense user id is : " + userID);
+            item.setUser_id(userID);
             db.addItem(item);
             System.out.println("Record added in db");
             Toast.makeText(this,"Expense added successfully!!!", Toast.LENGTH_LONG).show();
@@ -96,6 +107,7 @@ public class AddExpense extends AppCompatActivity {
 
     }
     public void backToHomeScreen(View view){
+
         Intent intent = new Intent(this, MainExpenseActivity.class);
         //intent.putExtra("EXTRA_MESSAGE", map);
         startActivity(intent);

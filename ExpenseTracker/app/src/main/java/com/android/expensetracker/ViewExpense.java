@@ -1,6 +1,8 @@
 package com.android.expensetracker;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ public class ViewExpense extends AppCompatActivity {
 
     private int year;
     private int mont;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,55 +49,86 @@ public class ViewExpense extends AppCompatActivity {
         }*/
 
     }
-    public int getMonth(String month){
+
+    public int getMonth(String month) {
         HashMap<String, Integer> mon = new HashMap<>();
-        mon.put("Jan",1);
-        mon.put("Feb",2);
-        mon.put("Mar",3);
-        mon.put("Apr",4);
-        mon.put("May",5);
-        mon.put("Jun",6);
-        mon.put("Jul",7);
-        mon.put("Aug",8);
-        mon.put("Sep",9);
-        mon.put("Oct",10);
-        mon.put("Nov",11);
-        mon.put("Dec",12);
+        mon.put("Jan", 1);
+        mon.put("Feb", 2);
+        mon.put("Mar", 3);
+        mon.put("Apr", 4);
+        mon.put("May", 5);
+        mon.put("Jun", 6);
+        mon.put("Jul", 7);
+        mon.put("Aug", 8);
+        mon.put("Sep", 9);
+        mon.put("Oct", 10);
+        mon.put("Nov", 11);
+        mon.put("Dec", 12);
 
         int mo = mon.get(month);
         return mo;
     }
-    public void view(View v){
+
+    public void view(View v) {
         //if(m!=null){
-            Spinner yearSpinner=(Spinner) findViewById(R.id.spinner3);
-            year = Integer.parseInt(yearSpinner.getSelectedItem().toString());
-            Spinner monthSpinner = (Spinner)findViewById(R.id.spinner4);
-            String month = monthSpinner.getSelectedItem().toString();
-            mont = getMonth(month);
-            //HashMap<Integer, Float> mf = m.get(year);
-            //Float total = mf.get(mont);
 
-            DBHelper db = new DBHelper(this);
-            Log.d("Reading: ", "Reading all shops..");
-            List<Item> items = db.getAllItems(year, mont);
-            float sum = 0;
-            if(items!=null) {
-                for (Item i : items) {
-                    System.out.println("item" + i.getName() + " " + "price:" + i.getPrice());
-                    sum += i.getPrice();
-                }
 
-            }else{
-                Toast.makeText(this, "Sorry no results found!",Toast.LENGTH_LONG).show();
+        Spinner yearSpinner = (Spinner) findViewById(R.id.spinner3);
+        year = Integer.parseInt(yearSpinner.getSelectedItem().toString());
+        Spinner monthSpinner = (Spinner) findViewById(R.id.spinner4);
+        String month = monthSpinner.getSelectedItem().toString();
+        mont = getMonth(month);
+        //HashMap<Integer, Float> mf = m.get(year);
+        //Float total = mf.get(mont);
+        SharedPreferences sharedpreferences = getSharedPreferences(HomeScreen.MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        String email = sharedpreferences.getString("email", "");
+
+        DBHelper db = new DBHelper(this);
+        int userID = db.getUserID(email);
+        Log.d("Reading: ", "Reading all shops..");
+        List<Item> items = db.getAllItems(userID, year, mont);
+        float sum = 0;
+        if (items != null) {
+            for (Item i : items) {
+                System.out.println("item" + i.getName() + " " + "price:" + i.getPrice());
+                sum += i.getPrice();
             }
-            EditText et = (EditText) findViewById(R.id.editText3);
-            et.setText(String.valueOf(sum));
+
+        } else {
+            Toast.makeText(this, "Sorry no results found!", Toast.LENGTH_LONG).show();
+        }
+        EditText et = (EditText) findViewById(R.id.editText3);
+        et.setText(String.valueOf(sum));
         //}
     }
-    public void viewItems(View view){
-        Intent i = new Intent(this,ViewItemList.class);
-        i.putExtra("Year",year);
-        i.putExtra("Month", mont);
-        startActivity(i);
+
+    public void viewItems(View view) {
+
+        SharedPreferences sharedpreferences = getSharedPreferences(HomeScreen.MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        String email = sharedpreferences.getString("email", "");
+        editor.putString("Email", email);
+        editor.commit();
+        DBHelper db = new DBHelper(this);
+        int userID = db.getUserID(email);
+        Log.d("Reading: ", "Reading all shops..");
+        List<Item> items = db.getAllItems(userID, year, mont);
+
+        if (items.size() == 0) {
+            Toast.makeText(this, "Sorry no results found!", Toast.LENGTH_LONG).show();
+
+        } else {
+            for (Item i : items) {
+
+                System.out.println("item" + i.getName() + " " + "price:" + i.getPrice());
+                //sum += i.getPrice();
+            }
+            Intent i = new Intent(this, ViewItemList.class);
+            i.putExtra("Year", year);
+            i.putExtra("Month", mont);
+            startActivity(i);
+        }
+
     }
 }

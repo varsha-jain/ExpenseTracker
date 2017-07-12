@@ -11,6 +11,7 @@ public class Item {
     private int month;
     private int year;
     private int day;
+    private int user_id;
 
     public Item(){
 
@@ -62,6 +63,15 @@ public class Item {
 
     public void setItem_id(int item_id) {
         this.item_id = item_id;
+    }
+
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     @Override
