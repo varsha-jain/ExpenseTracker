@@ -1,2 +1,2 @@
 # ExpenseTracker
-Android
+Android, Java, SQLite
