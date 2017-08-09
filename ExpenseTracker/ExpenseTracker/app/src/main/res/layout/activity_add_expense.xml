@@ -8,17 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.android.expensetracker.AddExpense">
-
-    <Button
-        android:text="Add Expense"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editText2"
-        android:layout_alignStart="@+id/textView4"
-        android:layout_marginTop="34dp"
-        android:id="@+id/button"
-        android:onClick="addExpenseOnClick" />
+    tools:context="com.android.expensetracker.activities.AddExpenseActivity">
 
     <TextView
         android:text="Item"
@@ -34,17 +24,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/editText"
-        android:layout_alignBaseline="@+id/textView3"
-        android:layout_alignBottom="@+id/textView3"
-        android:layout_alignStart="@+id/datePicker" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="number|numberSigned|numberDecimal"
         android:ems="10"
         android:layout_marginEnd="21dp"
         android:id="@+id/editText2"
@@ -61,25 +41,33 @@
         android:layout_below="@+id/datePicker"
         android:layout_alignStart="@+id/textView3" />
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:layout_alignTop="@+id/textView3"
+        android:layout_alignStart="@+id/editText2"
+        android:hint="Item Name" />
+
     <DatePicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/datePicker"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="15dp"
         android:headerBackground="@android:color/holo_green_light"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
         android:layout_below="@+id/editText"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignEnd="@+id/editText" />
 
-    <Button
-        android:text="Home"
+    <TextView
+        android:text="Date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
-        android:id="@+id/button2"
-        android:layout_alignBaseline="@+id/button"
-        android:layout_alignBottom="@+id/button"
-        android:layout_toEndOf="@+id/button"
-        android:onClick="backToHomeScreen" />
+        android:layout_alignTop="@+id/datePicker"
+        android:layout_alignStart="@+id/textView3"
+        android:layout_marginTop="72dp"
+        android:id="@+id/textView15" />
 </RelativeLayout>
